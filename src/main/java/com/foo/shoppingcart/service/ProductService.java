@@ -32,14 +32,16 @@ public class ProductService {
     }
 
     public Product update(Long id, Product product) {
-        productRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with given id: " + id));
 
         product.setId(id);
         return productRepository.save(product);
     }
 
     public void delete(Long id) {
-        Product product = productRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with given id: " + id));
 
         productRepository.delete(product);
     }

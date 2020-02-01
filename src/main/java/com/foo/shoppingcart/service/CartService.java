@@ -32,14 +32,16 @@ public class CartService {
     }
 
     public Cart update(Long id, Cart cart) {
-        cartRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        cartRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart not found with given id: " + id));
 
         cart.setId(id);
         return cartRepository.save(cart);
     }
 
     public void delete(Long id) {
-        Cart cart = cartRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        Cart cart = cartRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart not found with given id: " + id));
 
         cartRepository.delete(cart);
     }
