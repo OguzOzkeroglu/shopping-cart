@@ -22,7 +22,7 @@ public class CartItemService {
 
     public CartItem findById(Long id) {
         return cartItemRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Campaign not found with given id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("CartItem not found with given id: " + id));
     }
 
     public List<CartItem> findAll() {
@@ -34,14 +34,16 @@ public class CartItemService {
     }
 
     public CartItem update(Long id, CartItem cartItem) {
-        cartItemRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        cartItemRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("CartItem not found with given id: " + id));
 
         cartItem.setId(id);
         return cartItemRepository.save(cartItem);
     }
 
     public void delete(Long id) {
-        CartItem cartItem = cartItemRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        CartItem cartItem = cartItemRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("CartItem not found with given id: " + id));
 
         cartItemRepository.delete(cartItem);
     }

@@ -33,14 +33,16 @@ public class CampaignService {
     }
 
     public Campaign update(Long id, Campaign campaign) {
-        campaignRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        campaignRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Campaign not found with given id: " + id));
 
         campaign.setId(id);
         return campaignRepository.save(campaign);
     }
 
     public void delete(Long id) {
-        Campaign campaign = campaignRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        Campaign campaign = campaignRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Campaign not found with given id: " + id));
 
         campaignRepository.delete(campaign);
     }

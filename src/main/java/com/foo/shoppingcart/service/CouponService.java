@@ -32,14 +32,16 @@ public class CouponService {
     }
 
     public Coupon update(Long id, Coupon coupon) {
-        couponRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        couponRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Coupon not found with given id: " + id));
 
         coupon.setId(id);
         return couponRepository.save(coupon);
     }
 
     public void delete(Long id) {
-        Coupon coupon = couponRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        Coupon coupon = couponRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Coupon not found with given id: " + id));
 
         couponRepository.delete(coupon);
     }
